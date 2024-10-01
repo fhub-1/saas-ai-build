@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Provider } from "@/components/provider";
+import { ClerkProvider } from '@clerk/nextjs';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 const playfair = Montserrat({
@@ -21,18 +22,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressContentEditableWarning>
-      <body
-      className={cn(
-        'flex min-h-screen flex-col font-sans antialiased',
-        inter.variable,
-        playfair.variable
-      )}
-      >
-        <Provider>
-          <main className="grow">{children}</main>
-        </Provider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressContentEditableWarning>
+        <body
+        className={cn(
+          'flex min-h-screen flex-col font-sans antialiased',
+          inter.variable,
+          playfair.variable
+        )}
+        >
+          <Provider>
+            <main className="grow">{children}</main>
+          </Provider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

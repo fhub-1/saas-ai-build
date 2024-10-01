@@ -11,23 +11,25 @@ import {
   ChevronLeft,
   ChevronRight,
   LayoutDashboard,
+  Code,
+  Zap,
   BarChart,
-  Users,
   Settings,
   HelpCircle,
   LogOut,
   User
 } from 'lucide-react'
+import { UserButton } from '@clerk/nextjs'
 
 const sidebarItems = [
   { name: 'Dashbaord', href: '/dashbaord', icon: LayoutDashboard },
-  { name: 'Analytics', href: '/dashbaord/analytics', icon: BarChart },
-  { name: 'Users', href: '/dashbaord/users', icon: Users },
-  { name: 'Settings', href: '/dashaord/settings', icon: Settings },
-  { name: 'Support', href: '/dashbaord/support', icon: HelpCircle },
+  { name: 'Code Analysis', href: '/dashbaord/code-analysis', icon: Code },
+  { name: 'AI Completions', href: '/dashbaord/ai-completions', icon: Zap },
+  { name: 'Performance', href: '/dashbaord/performance', icon: BarChart },
+  { name: 'Settings', href: '/dashbaord/settings', icon: Settings },
 ]
 
-export  function Sidebar() {
+export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)
   const pathname = usePathname()
 
@@ -38,7 +40,7 @@ export  function Sidebar() {
       "transition-all duration-300 ease-in-out"
     )}>
       <div className="flex h-14 items-center justify-between px-4">
-        {!collapsed && <span className="font-bold">SaaS Dashboard</span>}
+        {!collapsed && <span className="font-bold">CursorAI</span>}
         <Button
           variant="ghost"
           size="icon"
@@ -68,13 +70,17 @@ export  function Sidebar() {
         </nav>
       </ScrollArea>
       <div className="p-4">
-        <Button variant="outline" className="w-full justify-start gap-2">
+        {/* <Button variant="outline" className="w-full justify-start gap-2">
           <User className="h-4 w-4" />
           {!collapsed && <span>Profile</span>}
         </Button>
         <Button variant="ghost" className="w-full justify-start gap-2 mt-2">
           <LogOut className="h-4 w-4" />
           {!collapsed && <span>Log out</span>}
+        </Button> */}
+        <Button asChild className="w-full justify-start gap-2 mt-2" size="lg">
+                  <UserButton/>
+
         </Button>
       </div>
     </div>

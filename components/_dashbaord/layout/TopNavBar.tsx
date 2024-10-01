@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { ThemeToggle } from '@/components/them-toggle'
+import { UserButton } from '@clerk/nextjs'
  
 export    function TopNavBar() {
   return (
@@ -46,7 +47,10 @@ export    function TopNavBar() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>
+
+            <UserButton />
+              </DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuItem>Log out</DropdownMenuItem>
           </DropdownMenuContent>
