@@ -1,8 +1,7 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
-
-import { UpdateUser, createUser } from "@/lib/users"
+import { createUser } from '@/lib/users'
 import { User } from '@prisma/client'
 
 export async function POST(req: Request) {
@@ -10,7 +9,7 @@ export async function POST(req: Request) {
 
   if (!WEBHOOK_SECRET) {
     throw new Error(
-      'Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local'
+      'Please add CLERK_WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local'
     )
   }
 
@@ -70,24 +69,6 @@ export async function POST(req: Request) {
     }
 
     await createUser(user as User)
-  }
-
-  if (eventType === 'user.updated') {
-    const { id, first_name, last_name, image_url } = evt.data
-
-    if (!id) {
-      return new Response('Error occurred -- missing data', {
-        status: 400
-      })
-    }
-
-    const data = {
-      ...(first_name ? { firstName: first_name } : {}),
-      ...(last_name ? { lastName: last_name } : {}),
-      ...(image_url ? { imageUrl: image_url } : {})
-    }
-
-    await UpdateUser(id, data)
   }
 
   return new Response('', { status: 200 })

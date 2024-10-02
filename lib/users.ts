@@ -1,10 +1,9 @@
-// import prisma from '@/app/_components/lib/prisma'
+import prisma from '@/lib/prisma'
 import { User } from '@prisma/client'
-import db from './db'
 
 export async function createUser(data: User) {
   try {
-    const user = await db.user.create({ data })
+    const user = await prisma.user.create({ data })
     return { user }
   } catch (error) {
     return { error }
@@ -25,7 +24,7 @@ export async function getUserById({
 
     const query = id ? { id } : { clerkUserId }
 
-    const user = await db.user.findUnique({ where: query })
+    const user = await prisma.user.findUnique({ where: query })
     return { user }
   } catch (error) {
     return { error }
@@ -34,17 +33,12 @@ export async function getUserById({
 
 export async function UpdateUser(id: string, data: Partial<User>) {
   try {
-    const user = await db.user.update({
-      where: { clerkUserId: id },
+    const user = await prisma.user.update({
+      where: { id },
       data
     })
     return { user }
   } catch (error) {
     return { error }
   }
-}
-
-export function combineName(user: User) {
-  const { firstName, lastName } = user
-  return `${firstName} ${lastName}`
 }
